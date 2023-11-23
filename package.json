@@ -1,6 +1,6 @@
 ﻿{
-  "name": "com.rimurudev.rimurudev-sceneswitcher",
-  "version": "1.3.0",
+  "name": "com.rimurudev.sceneswitcher",
+  "version": "1.3.1",
   "displayName": "RimuruDev SceneSwitcher",
   "description": "Easily and conveniently navigate scenes in Unity without having to manually search for the scene you need.",
   "unity": "2019.1",
