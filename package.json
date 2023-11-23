@@ -1,0 +1,25 @@
+﻿{
+  "name": "com.rimurudev.rimurudev-sceneswitcher",
+  "version": "1.3.0",
+  "displayName": "RimuruDev SceneSwitcher",
+  "description": "Easily and conveniently navigate scenes in Unity without having to manually search for the scene you need.",
+  "unity": "2019.1",
+  "dependencies": {},
+  "keywords": [
+    "rimurudev",
+    "rimuru-dev",
+    "abyssmoth",
+    "abyss-moth",
+    "unity",
+    "unity2d",
+    "unity-editor",
+    "utility",
+    "unity-scripts",
+    "unity-tools"
+  ],
+  "author": {
+    "name": "RimuruDev",
+    "email": "rimuru.dev@gmail.com",
+    "url": "https://github.com/RimuruDev"
+  }
+}
