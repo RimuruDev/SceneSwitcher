@@ -45,7 +45,7 @@ SceneSwitcher - это удобный инструмент для Unity Editor, 
 1. Откройте Unity и перейдите в ваш проект.
 2. Откройте `Window` > `Package Manager`.
 3. В Package Manager выберите `+` > `Add package from git URL...`.
-4. Введите следующий URL: `https://github.com/RimuruDev/SceneSwitcher.git`.
+4. Введите следующий URL: `` https://github.com/RimuruDev/SceneSwitcher.git``
 5. Нажмите `Enter` и дождитесь завершения установки.
 
 ## Использование
