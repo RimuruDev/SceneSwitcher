@@ -28,6 +28,7 @@ namespace AbyssMoth.External.RimuruDevUtils.Editor.SceneSwitcher
         private bool autoSaveEnabled = true;
         private bool settingsFoldout = true;
         private bool showDebugLog;
+        private Vector2 scrollPosition;
 
         [MenuItem("RimuruDev Tools/Scene Switcher " + СtrlF2)]
         private static void ShowWindow()
@@ -40,22 +41,16 @@ namespace AbyssMoth.External.RimuruDevUtils.Editor.SceneSwitcher
             GUILayout.Label("Scene Switcher", EditorStyles.boldLabel);
 
             settingsFoldout = EditorGUILayout.Foldout(settingsFoldout, "Settings");
-
             if (settingsFoldout)
             {
                 EditorGUI.indentLevel++;
-                {
-                    showAllScenes = EditorGUILayout.Toggle("Show Absolutely All Scenes", showAllScenes);
-                    autoSaveEnabled = EditorGUILayout.Toggle("Enable Auto Save", autoSaveEnabled);
-                    showDebugLog = EditorGUILayout.Toggle("Show Debug Log", showDebugLog);
-                }
+                showAllScenes = EditorGUILayout.Toggle("Show Absolutely All Scenes", showAllScenes);
+                autoSaveEnabled = EditorGUILayout.Toggle("Enable Auto Save", autoSaveEnabled);
+                showDebugLog = EditorGUILayout.Toggle("Show Debug Log", showDebugLog);
                 EditorGUI.indentLevel--;
             }
 
-            EditorGUI.BeginChangeCheck();
-            if (EditorGUI.EndChangeCheck())
-                Repaint();
-
+            scrollPosition = GUILayout.BeginScrollView(scrollPosition, GUILayout.Width(400), GUILayout.Height(600));
             var scenePaths = showAllScenes ? GetAllScenePaths() : GetScenePathsByBuildSettings();
 
             foreach (var scenePath in scenePaths)
@@ -71,6 +66,8 @@ namespace AbyssMoth.External.RimuruDevUtils.Editor.SceneSwitcher
                     EditorSceneManager.OpenScene(scenePath);
                 }
             }
+
+            GUILayout.EndScrollView();
         }
 
         private static string[] GetScenePathsByBuildSettings()
