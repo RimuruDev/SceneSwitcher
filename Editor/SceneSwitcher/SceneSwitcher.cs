@@ -50,7 +50,7 @@ namespace AbyssMoth.External.RimuruDevUtils.Editor.SceneSwitcher
                 EditorGUI.indentLevel--;
             }
 
-            scrollPosition = GUILayout.BeginScrollView(scrollPosition, GUILayout.Width(400), GUILayout.Height(600));
+            scrollPosition = GUILayout.BeginScrollView(scrollPosition, GUILayout.Width(350), GUILayout.Height(350));
             var scenePaths = showAllScenes ? GetAllScenePaths() : GetScenePathsByBuildSettings();
 
             foreach (var scenePath in scenePaths)
