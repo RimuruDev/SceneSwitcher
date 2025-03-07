@@ -50,12 +50,14 @@ namespace AbyssMoth.External.RimuruDevUtils.Editor.SceneSwitcher
                 EditorGUI.indentLevel--;
             }
 
-            scrollPosition = GUILayout.BeginScrollView(scrollPosition, GUILayout.Width(350), GUILayout.Height(350));
+            scrollPosition = GUILayout.BeginScrollView(scrollPosition,  GUILayout.Height(350));
             var scenePaths = showAllScenes ? GetAllScenePaths() : GetScenePathsByBuildSettings();
-
+    
             foreach (var scenePath in scenePaths)
             {
-                if (GUILayout.Button(Path.GetFileNameWithoutExtension(scenePath)))
+                GUILayout.BeginHorizontal();
+                GUILayout.FlexibleSpace();
+                if (GUILayout.Button(Path.GetFileNameWithoutExtension(scenePath), GUILayout.ExpandWidth(false)))
                 {
                     if (autoSaveEnabled && EditorSceneManager.SaveOpenScenes())
                     {
@@ -65,6 +67,9 @@ namespace AbyssMoth.External.RimuruDevUtils.Editor.SceneSwitcher
 
                     EditorSceneManager.OpenScene(scenePath);
                 }
+                
+                GUILayout.FlexibleSpace();
+                GUILayout.EndHorizontal();
             }
 
             GUILayout.EndScrollView();
