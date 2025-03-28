@@ -1,12 +1,11 @@
 // **************************************************************** //
 //
 //   Copyright (c) RimuruDev. All rights reserved.
-//   Contact me: 
+//   Contact me:
 //          - Gmail:    rimuru.dev@gmail.com
 //          - LinkedIn: https://www.linkedin.com/in/rimuru/
 //          - Gists:    https://gist.github.com/RimuruDev/af759ce6d9768a38f6838d8b7cc94fc8
 //          - GitHub:   https://github.com/RimuruDev
-//          - GitHub Organizations: https://github.com/Rimuru-Dev
 //
 // **************************************************************** //
 
@@ -20,7 +19,7 @@ namespace AbyssMoth.External.RimuruDevUtils.Editor.SceneSwitcher
 {
     public sealed class SceneSwitcher : EditorWindow
     {
-        private const string СtrlF2 = "%#F2";
+        private const string CtrlF2 = "%#F2";
         private const string FindAssets = "t:Scene";
         private const string logFormat = "<color=yellow>{0}</color>";
 
@@ -28,12 +27,13 @@ namespace AbyssMoth.External.RimuruDevUtils.Editor.SceneSwitcher
         private bool autoSaveEnabled = true;
         private bool settingsFoldout = true;
         private bool showDebugLog;
+        private bool compactButtons;
         private Vector2 scrollPosition;
 
-        [MenuItem("RimuruDev Tools/Scene Switcher " + СtrlF2)]
+        [MenuItem("RimuruDev Tools/Scene Switcher " + CtrlF2)]
         private static void ShowWindow()
         {
-            GetWindow(typeof(SceneSwitcher));
+            GetWindow<SceneSwitcher>();
         }
 
         private void OnGUI()
@@ -41,23 +41,35 @@ namespace AbyssMoth.External.RimuruDevUtils.Editor.SceneSwitcher
             GUILayout.Label("Scene Switcher", EditorStyles.boldLabel);
 
             settingsFoldout = EditorGUILayout.Foldout(settingsFoldout, "Settings");
+           
             if (settingsFoldout)
             {
                 EditorGUI.indentLevel++;
-                showAllScenes = EditorGUILayout.Toggle("Show Absolutely All Scenes", showAllScenes);
-                autoSaveEnabled = EditorGUILayout.Toggle("Enable Auto Save", autoSaveEnabled);
-                showDebugLog = EditorGUILayout.Toggle("Show Debug Log", showDebugLog);
+                {
+                    showAllScenes = EditorGUILayout.Toggle("Show Absolutely All Scenes", showAllScenes);
+                    autoSaveEnabled = EditorGUILayout.Toggle("Enable Auto Save", autoSaveEnabled);
+                    showDebugLog = EditorGUILayout.Toggle("Show Debug Log", showDebugLog);
+                    compactButtons = EditorGUILayout.Toggle("Compact Buttons", compactButtons);
+                }
                 EditorGUI.indentLevel--;
             }
 
-            scrollPosition = GUILayout.BeginScrollView(scrollPosition,  GUILayout.Height(350));
-            var scenePaths = showAllScenes ? GetAllScenePaths() : GetScenePathsByBuildSettings();
-    
+            scrollPosition = GUILayout.BeginScrollView(scrollPosition, false, true, GUILayout.Width(350), GUILayout.Height(350));
+
+            var scenePaths = showAllScenes
+                ? GetAllScenePaths()
+                : GetScenePathsByBuildSettings();
+           
+            var buttonWidth = compactButtons 
+                ? 200
+                : 300;
+
             foreach (var scenePath in scenePaths)
             {
                 GUILayout.BeginHorizontal();
                 GUILayout.FlexibleSpace();
-                if (GUILayout.Button(Path.GetFileNameWithoutExtension(scenePath), GUILayout.ExpandWidth(false)))
+
+                if (GUILayout.Button(Path.GetFileNameWithoutExtension(scenePath), GUILayout.Width(buttonWidth)))
                 {
                     if (autoSaveEnabled && EditorSceneManager.SaveOpenScenes())
                     {
@@ -67,7 +79,7 @@ namespace AbyssMoth.External.RimuruDevUtils.Editor.SceneSwitcher
 
                     EditorSceneManager.OpenScene(scenePath);
                 }
-                
+
                 GUILayout.FlexibleSpace();
                 GUILayout.EndHorizontal();
             }
@@ -77,10 +89,11 @@ namespace AbyssMoth.External.RimuruDevUtils.Editor.SceneSwitcher
 
         private static string[] GetScenePathsByBuildSettings()
         {
-            var paths = new string[EditorBuildSettings.scenes.Length];
+            var scenes = EditorBuildSettings.scenes;
+            var paths = new string[scenes.Length];
 
-            for (var i = 0; i < EditorBuildSettings.scenes.Length; i++)
-                paths[i] = EditorBuildSettings.scenes[i].path;
+            for (var i = 0; i < scenes.Length; i++)
+                paths[i] = scenes[i].path;
 
             return paths;
         }
@@ -88,14 +101,10 @@ namespace AbyssMoth.External.RimuruDevUtils.Editor.SceneSwitcher
         private static string[] GetAllScenePaths()
         {
             var guids = AssetDatabase.FindAssets(FindAssets);
-
             var scenePaths = new string[guids.Length];
 
-            for (var i = 0; i < scenePaths.Length; i++)
-            {
-                var path = AssetDatabase.GUIDToAssetPath(guids[i]);
-                scenePaths[i] = path;
-            }
+            for (var i = 0; i < guids.Length; i++)
+                scenePaths[i] = AssetDatabase.GUIDToAssetPath(guids[i]);
 
             return scenePaths;
         }
