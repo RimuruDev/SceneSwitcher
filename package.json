@@ -1,15 +1,11 @@
 ﻿{
-  "name": "com.rimurudev.sceneswitcher",
-  "version": "1.6.4",
-  "displayName": "RimuruDev",
+  "name": "com.destructive_crab.sceneswitcher",
+  "version": "2.2",
+  "displayName": "destructive_crab",
   "description": "Easily and conveniently navigate scenes in Unity without having to manually search for the scene you need.",
   "unity": "2019.1",
   "dependencies": {},
   "keywords": [
-    "rimurudev",
-    "rimuru-dev",
-    "abyssmoth",
-    "abyss-moth",
     "unity",
     "unity2d",
     "unity-editor",
@@ -18,8 +14,7 @@
     "unity-tools"
   ],
   "author": {
-    "name": "RimuruDev",
-    "email": "rimuru.dev@gmail.com",
-    "url": "https://github.com/RimuruDev"
+    "name": "destructive_crab",
+    "url": "https://github.com/destructive-crab"
   }
 }
